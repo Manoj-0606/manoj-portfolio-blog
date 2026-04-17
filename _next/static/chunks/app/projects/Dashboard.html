@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Portfolio Admin - Manoj J | Python Developer </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Anton&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 15, 15, 16; /* #0f0f10 */
+  --background-end-rgb: 15, 15, 16;
+  --card-bg: #1a1a1b;
+  --border-color: #2a2a2b;
+  --accent: #22c55e; /* green */
+}
+
+/* BODY */
+body {
+  font-family: 'Inter', sans-serif;
+  color: rgb(var(--foreground-rgb));
+  background: #0f0f10;
+}
+
+/* GRADIENT TEXT → GREEN ACCENT */
+.gradient-text {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* PAGE ANIMATION */
+.page-transition {
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* GLASS CARD → DARK CARD */
+.glass-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+}
+
+/* CARD HOVER */
+.card-hover {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-10px) scale(1.01);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  border-color: #22c55e;
+}
+
+/* TEXT CLAMP */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* OPTIONAL: MUTED TEXT */
+.text-muted {
+  color: #9ca3af;
+}
+
+/* OPTIONAL: ACCENT BUTTON */
+.btn-accent {
+  background: #22c55e;
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.btn-accent:hover {
+  background: #16a34a;
+}
+</style>
+</head>
+<body class="min-h-screen overflow-x-hidden">
+    <!-- Login Overlay -->
+    <div id="loginOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center p-8">
+        <div class="glass-card p-12 rounded-4xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto page-transition">
+            <div class="text-center mb-10">
+                <div class="w-24 h-24 bg-gradient-to-br from-purple-500 via-green-500 to-green-500 rounded-3xl mx-auto mb-8 flex items-center justify-center shadow-2xl">
+                    <i class="fas fa-user-cog text-4xl text-white"></i>
+                </div>
+                <h1 class="text-4xl font-bold gradient-text mb-3">Portfolio Admin</h1>
+                <p class="text-xl text-gray-600 font-medium">Manoj J |  Developer Dashboard</p>
+            </div>
+            <form id="loginForm" class="space-y-8">
+                <div class="space-y-3">
+                    <label class="block text-lg font-semibold text-gray-800">Username</label>
+                    <div class="relative">
+                        <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" id="username" class="w-full pl-12 pr-5 py-5 border-2 border-gray-200 rounded-3xl focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 transition-all duration-500 text-lg placeholder-gray-500" placeholder="Manoj J" requigreen>
+                    </div>
+                </div>
+                <div class="space-y-3">
+                    <label class="block text-lg font-semibold text-gray-800">Password</label>
+                    <div class="relative">
+                        <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="password" id="password" class="w-full pl-12 pr-5 py-5 border-2 border-gray-200 rounded-3xl focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 transition-all duration-500 text-lg placeholder-gray-500" placeholder="portfolio2026" requigreen>
+                    </div>
+                </div>
+                <button type="submit"
+  class="w-full bg-gradient-to-r from-green-400 via-green-500 to-green-600 
+  hover:from-green-500 hover:via-green-600 hover:to-green-700 
+  text-black py-6 px-8 rounded-3xl font-bold text-xl 
+  shadow-[0_0_20px_rgba(34,197,94,0.6)] 
+  hover:shadow-[0_0_35px_rgba(34,197,94,0.9)] 
+  transform hover:-translate-y-2 transition-all duration-500 
+  flex items-center justify-center group">
+
+  <i class="fas fa-rocket mr-4 group-hover:animate-bounce"></i>
+  <span>Launch Dashboard</span>
+
+</button>
+            </form>
+            <p id="loginError" class="text-green-500 font-semibold mt-6 text-center hidden py-3 bg-green-100/50 rounded-2xl">Invalid cgreenentials! Please try again.</p>
+            <div class="mt-8 pt-8 border-t border-gray-200/50 text-center">
+                <p class="text-sm text-gray-500"> Manoj J | Bengaluru, Karnataka</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="hidden min-h-screen">
+        <!-- Header -->
+        <header class="glass-card shadow-2xl backdrop-blur-xl border-b border-white/30 sticky top-0 z-40">
+            <div class="container mx-auto px-8 py-8">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                    <div class="flex items-center space-x-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 via-pink-500 to-green-500 rounded-3xl flex items-center justify-center shadow-2xl">
+                            <i class="fas fa-laptop-code text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-4xl lg:text-5xl font-bold gradient-text mb-1">Portfolio Admin</h1>
+                            <p class="text-xl text-gray-600 font-medium">Content Management Dashboard</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4 lg:ml-auto">
+                        <div class="flex items-center space-x-2 px-4 py-2 bg-green-100/50 rounded-2xl text-green-700 font-semibold">
+                            <i class="fas fa-circle text-green-500 text-sm"></i>
+                            <span>Live</span>
+                        </div>
+                        <button onclick="logout()" class="flex items-center space-x-3 px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-2xl font-bold shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="container mx-auto px-8 py-16 lg:py-24">
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <div class="glass-card p-10 rounded-4xl shadow-2xl card-hover border border-white/20">
+                    <div class="flex items-center">
+                        <div class="p-5 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-3xl shadow-xl">
+                            <i class="fas fa-newspaper text-3xl text-white"></i>
+                        </div>
+                        <div class="ml-8">
+                            <p class="text-sm font-bold text-gray-600 uppercase tracking-wider">Blog Posts</p>
+                            <p id="totalPosts" class="text-5xl font-black gradient-text mt-2">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card p-10 rounded-4xl shadow-2xl card-hover border border-white/20">
+                    <div class="flex items-center">
+                        <div class="p-5 bg-gradient-to-br from-green-500 to-emerald-600 rounded-3xl shadow-xl">
+                            <i class="fas fa-eye text-3xl text-white"></i>
+                        </div>
+                        <div class="ml-8">
+                            <p class="text-sm font-bold text-gray-600 uppercase tracking-wider">Published</p>
+                            <p id="publishedPosts" class="text-5xl font-black gradient-text mt-2">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card p-10 rounded-4xl shadow-2xl card-hover border border-white/20">
+                    <div class="flex items-center">
+                        <div class="p-5 bg-gradient-to-br from-yellow-500 to-amber-600 rounded-3xl shadow-xl">
+                            <i class="fas fa-edit text-3xl text-white"></i>
+                        </div>
+                        <div class="ml-8">
+                            <p class="text-sm font-bold text-gray-600 uppercase tracking-wider">Drafts</p>
+                            <p id="draftPosts" class="text-5xl font-black gradient-text mt-2">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card p-10 rounded-4xl shadow-2xl card-hover border border-white/20">
+                    <div class="flex items-center">
+                        <div class="p-5 bg-gradient-to-br from-purple-500 to-violet-600 rounded-3xl shadow-xl">
+                            <i class="fas fa-image text-3xl text-white"></i>
+                        </div>
+                        <div class="ml-8">
+                            <p class="text-sm font-bold text-gray-600 uppercase tracking-wider">Images</p>
+                            <p id="totalImages" class="text-5xl font-black gradient-text mt-2">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Grid -->
+            <div class="grid lg:grid-cols-3 gap-10">
+                <!-- Blog Posts List -->
+                <div class="lg:col-span-2 space-y-10">
+                    <div class="glass-card rounded-4xl shadow-2xl p-10 border border-white/20">
+                        <div class="flex flex-col lg:flex-row lg:items-center justify-between mb-10 gap-6">
+                            <div>
+                                <h2 class="text-4xl lg:text-5xl font-black gradient-text mb-3">Blog Posts</h2>
+                                <p class="text-xl text-gray-600 font-medium">Manage your portfolio showcase content</p>
+                            </div>
+                            <button onclick="showForm()" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-10 py-5 rounded-3xl font-bold text-lg shadow-2xl hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 flex items-center group">
+                                <i class="fas fa-plus mr-3 text-xl group-hover:animate-bounce"></i>
+                                <span>New Post</span>
+                            </button>
+                        </div>
+                        
+                        <div id="postsList" class="grid grid-cols-1 gap-8 min-h-[500px]">
+                            <!-- Posts will be here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Panel -->
+                <div id="blogFormContainer" class="glass-card rounded-4xl shadow-2xl p-10 border border-white/20 lg:sticky lg:top-32 lg:h-fit">
+                    <h3 id="formTitle" class="text-3xl font-bold gradient-text mb-10 text-center">Add New Blog Post</h3>
+                    <form id="blogForm" class="space-y-6">
+                        <input type="hidden" id="editId">
+                        
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-800 mb-4">Title</label>
+                            <input type="text" id="postTitle" class="w-full px-6 py-4 border-2 border-gray-200 rounded-3xl focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 transition-all duration-500 text-lg font-bold" placeholder="Project title" requigreen>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-800 mb-4">Year</label>
+                            <input type="number" id="postYear" class="w-full px-6 py-4 border-2 border-gray-200 rounded-3xl focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 transition-all duration-500 text-lg font-bold" placeholder="2026" min="2000" max="2030" requigreen>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-800 mb-4">Description</label>
+                            <textarea id="postDescription" rows="4" class="w-full px-6 py-4 border-2 border-gray-200 rounded-3xl focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 transition-all duration-500 text-lg resize-vertical" placeholder="Brief project description..." requigreen></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-800 mb-4">Tools & Stack</label>
+                            <input type="text" id="postStack" class="w-full px-6 py-4 border-2 border-gray-200 rounded-3xl focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 transition-all duration-500 text-lg" placeholder="React, Tailwind, Node.js, MongoDB" requigreen>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-800 mb-4">Images (comma separated URLs)</label>
+                            <textarea id="postImages" rows="3" class="w-full px-6 py-4 border-2 border-gray-200 rounded-3xl focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 transition-all duration-500 text-lg resize-vertical" placeholder="https://image1.jpg, https://image2.jpg"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-800 mb-4">Status</label>
+                            <select id="postStatus" class="w-full px-6 py-4 border-2 border-gray-200 rounded-3xl focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 transition-all duration-500 text-lg font-bold" requigreen>
+                                <option value="Draft">Draft</option>
+                                <option value="Published">Published</option>
+                            </select>
+                        </div>
+                        
+                        <div class="flex gap-4 pt-6">
+                            <button type="submit" class="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white py-5 px-8 rounded-3xl font-bold text-lg shadow-2xl hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 flex items-center justify-center">
+                                <i class="fas fa-save mr-3"></i>
+                                <span>Save Post</span>
+                            </button>
+                            <button type="button" onclick="cancelEdit()" class="px-10 py-5 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-3xl font-bold shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-500 flex items-center justify-center">
+                                <i class="fas fa-times mr-3"></i>
+                                <span>Cancel</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Cgreenentials
+        const ADMIN_CgreenENTIALS = { username: 'Manoj J', password: 'portfolio2026' };
+        
+        // Sample portfolio posts
+        let posts = [
+            {
+                id: 1,
+                title: "BFSI Analytics Dashboard",
+                year: 2026,
+                description: "Interactive dashboard for Banking, Financial Services and Insurance sector analytics with real-time data visualization.",
+                stack: "React, Tailwind CSS, Chart.js, Node.js",
+                images: ["https://via.placeholder.com/800x500/3b82f6/ffffff?text=BFSI+Dashboard", "https://via.placeholder.com/800x500/10b981/ffffff?text=Analytics"],
+                status: "Published"
+            },
+            {
+                id: 2,
+                title: "Land Classification AI",
+                year: 2026,
+                description: "Machine learning model for satellite imagery analysis and automated land classification using TensorFlow.",
+                stack: "Python, TensorFlow, Flask, PostgreSQL",
+                images: ["https://via.placeholder.com/800x500/059669/ffffff?text=Land+AI", "https://via.placeholder.com/800x500/ef4444/ffffff?text=Satellite"],
+                status: "Draft"
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            document.getElementById('blogForm').addEventListener('submit', handleFormSubmit);
+            if (!document.getElementById('adminDashboard').classList.contains('hidden')) {
+                updatePostsList();
+                updateStats();
+            }
+        });
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === ADMIN_CgreenENTIALS.username && password === ADMIN_CgreenENTIALS.password) {
+                document.getElementById('loginOverlay').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                updatePostsList();
+                updateStats();
+            } else {
+                document.getElementById('loginError').classList.remove('hidden');
+                setTimeout(() => document.getElementById('loginError').classList.add('hidden'), 4000);
+            }
+        }
+
+        function logout() {
+            document.getElementById('loginOverlay').classList.remove('hidden');
+            document.getElementById('adminDashboard').classList.add('hidden');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        function showForm(post = null) {
+            document.getElementById('blogFormContainer').classList.remove('hidden');
+            
+            if (post) {
+                document.getElementById('formTitle').textContent = 'Edit Blog Post';
+                document.getElementById('editId').value = post.id;
+                document.getElementById('postTitle').value = post.title;
+                document.getElementById('postYear').value = post.year;
+                document.getElementById('postDescription').value = post.description;
+                document.getElementById('postStack').value = post.stack;
+                document.getElementById('postImages').value = post.images.join(', ');
+                document.getElementById('postStatus').value = post.status;
+            } else {
+                document.getElementById('formTitle').textContent = 'Add New Blog Post';
+                document.getElementById('blogForm').reset();
+                document.getElementById('editId').value = '';
+            }
+        }
+
+        function cancelEdit() {
+            document.getElementById('blogFormContainer').classList.add('hidden');
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const id = document.getElementById('editId').value;
+            const title = document.getElementById('postTitle').value;
+            const year = document.getElementById('postYear').value;
+            const description = document.getElementById('postDescription').value;
+            const stack = document.getElementById('postStack').value;
+            const imagesStr = document.getElementById('postImages').value;
+            const status = document.getElementById('postStatus').value;
+            const images = imagesStr.split(',').map(img => img.trim()).filter(img => img);
+
+            const postData = { title, year: parseInt(year), description, stack, images, status };
+
+            if (id) {
+                const postIndex = posts.findIndex(p => p.id == id);
+                posts[postIndex] = { ...posts[postIndex], ...postData };
+            } else {
+                posts.unshift({ id: Date.now(), ...postData });
+            }
+
+            updatePostsList();
+            updateStats();
+            cancelEdit();
+        }
+
+        function deletePost(id) {
+            if (confirm('Delete this portfolio post? This cannot be undone.')) {
+                posts = posts.filter(p => p.id != id);
+                updatePostsList();
+                updateStats();
+            }
+        }
+
+        function editPost(id) {
+            const post = posts.find(p => p.id == id);
+            showForm(post);
+        }
+
+        function updatePostsList() {
+            const container = document.getElementById('postsList');
+            if (posts.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-24">
+                        <i class="fas fa-newspaper text-8xl text-gray-300 mb-8"></i>
+                        <h3 class="text-4xl font-bold text-gray-500 mb-4">No posts yet</h3>
+                        <p class="text-xl text-gray-400 mb-10">Start building your portfolio showcase</p>
+                        <button onclick="showForm()" class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-12 py-6 rounded-3xl font-bold text-xl shadow-2xl hover:shadow-3xl transform hover:-translate-y-3 transition-all duration-500 inline-flex items-center">
+                            <i class="fas fa-plus mr-3 text-2xl"></i>
+                            Create First Post
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = posts.map(post => `
+                <div class="glass-card rounded-4xl p-10 shadow-2xl card-hover border border-white/30 group">
+                    <div class="flex items-start justify-between mb-8">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-4 h-4 rounded-full ${post.status === 'Published' ? 'bg-green-500 shadow-lg shadow-green-500/50' : 'bg-yellow-500 shadow-lg shadow-yellow-500/50'}"></div>
+                            <span class="px-4 py-2 bg-gradient-to-r ${post.status === 'Published' ? 'from-green-100 to-green-200' : 'from-yellow-100 to-yellow-200'} text-${post.status === 'Published' ? 'green-800' : 'yellow-800'} rounded-2xl font-bold text-sm uppercase tracking-wide">
+                                ${post.status}
+                            </span>
+                        </div>
+                        <div class="flex items-center space-x-3 text-sm text-gray-500">
+                            <span><i class="fas fa-calendar mr-1"></i>${post.year}</span>
+                            <span class="w-px h-4 bg-gray-300"></span>
+                            <span>${post.images.length} images</span>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-3xl font-black text-gray-900 mb-6 group-hover:text-purple-600 transition-colors line-clamp-2">${post.title}</h3>
+                    
+                    <p class="text-gray-600 mb-6 text-lg line-clamp-3">${post.description}</p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-8">
+                        ${post.stack.split(',').map(tool => `<span class="px-4 py-2 bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-800 rounded-2xl text-sm font-bold border border-blue-200">${tool.trim()}</span>`).join('')}
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-3 mb-8">
+                        ${post.images.slice(0, 2).map(img => `<img src="${img}" alt="Preview" class="w-full h-32 object-cover rounded-2xl shadow-lg group-hover:shadow-2xl transition-all duration-500">`).join('')}
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-8 border-t border-gray-200">
+                        <button onclick="editPost(${post.id})" class="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-2xl font-bold shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
+                            <i class="fas fa-edit"></i>
+                            <span>Edit</span>
+                        </button>
+                        <button onclick="deletePost(${post.id})" class="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-green-600 to-rose-600 hover:from-green-700 hover:to-rose-700 text-white rounded-2xl font-bold shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
+                            <i class="fas fa-trash"></i>
+                            <span>Delete</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateStats() {
+            const total = posts.length;
+            const published = posts.filter(p => p.status === 'Published').length;
+            const drafts = posts.filter(p => p.status === 'Draft').length;
+            const images = posts.greenuce((sum, p) => sum + p.images.length, 0);
+
+            document.getElementById('totalPosts').textContent = total;
+            document.getElementById('publishedPosts').textContent = published;
+            document.getElementById('draftPosts').textContent = drafts;
+            document.getElementById('totalImages').textContent = images;
+        }
+    </script>
+</body>
+</html>
