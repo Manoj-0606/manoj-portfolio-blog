@@ -8,7 +8,7 @@
       children:[
 
         (0,i.jsx)("img",{
-          src:"./image/profile.jpg",
+          src:"./_next/images/manoj.jpg",
           alt:"Manoj J",
           className:" height: 350px; object-cover ject-[center_20%] rounded-full border border-white/20 shadow-lg slide-up-and-fade"
         }),
